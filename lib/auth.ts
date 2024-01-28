@@ -12,6 +12,16 @@ providers: [
     GithubProvider({
         clientId: env.GITHUB_ID,
         clientSecret: env.GITHUB_SECRET,
+        profile(profile) {
+            console.log(profile)
+            return {
+              id: profile.id.toString(),
+              username: profile.login ?? null,
+              name: profile.name ?? null,
+              email: profile.email ?? null,
+              image: profile.avatar_url ?? null,
+            };
+        }
     }),
     GoogleProvider({
         clientId: env.GOOGLE_CLIENT_ID,
