@@ -15,10 +15,6 @@ const userQuery = {
     email: true,
 }satisfies Prisma.UserSelect
 
-// export const revalidate = 0;
-// export const dynamic = "force-dynamic";
-// export const fetchCache = "force-no-store";
-
 export const getUser=async()=>{
     const session = await getAuthSession()
 

@@ -6,6 +6,7 @@ import { createReply } from "@/app/posts/[postId]/reply/write-reply.action";
 
 const Page = async ({params} :{params :{postId: string}}) => {
   const user = await getUser();
+  
   return (
     <div>
       <WriteModal user={user} path={"reply"} createPost={async(values) => {

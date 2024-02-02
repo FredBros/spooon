@@ -5,7 +5,6 @@ import { ThemeProvider } from "@/src/theme/ThemeProvider";
 import clsx from "clsx";
 import Header from "@/src/feature/layout/Header";
 import { Footer } from "@/src/feature/layout/Footer";
-import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +22,6 @@ export default function RootLayout({ children, modal }: LayoutProps) {
   return (
     <html lang="en" className="h-full">
       <body className={clsx(inter.className, "bg-background h-full")}>
-        <Toaster position="top-center" />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex flex-col h-full">
             <Header />

@@ -1,7 +1,9 @@
 "use client"; // Error components must be Client Components
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { buttonVariants } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Error({
@@ -23,6 +25,9 @@ export default function Error({
       <AlertDescription>
         You must be logged to access this page
       </AlertDescription>
+      <Link className={buttonVariants({ variant: "link" })} href="/">
+        Home
+      </Link>
     </Alert>
   );
 }
