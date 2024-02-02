@@ -25,7 +25,6 @@ const WritePostForm = ({user, onSubmit}: WritePostFormProps) => {
     <PostLayout user={user}>
       <Form form={form} onSubmit={async (values)=>{
         const postId = await onSubmit(values)
-        console.log("Submit clientside", postId);
         router.push(`/posts/${postId}`);
         router.refresh();
       }} >

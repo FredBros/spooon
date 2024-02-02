@@ -16,8 +16,7 @@ export default async function PostView({
   if (!post) {
     notFound()
   }
-console.log("__________________________________________________________")
-console.log(post)
+
   return (
     <div className="divide-y divide-accent">
       {post.parent && <Post post={post.parent} key={post.parent.id} />}
