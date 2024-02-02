@@ -14,7 +14,7 @@ import { Metadata } from 'next'
 // export const fetchCache = "force-no-store";
 
 export const generateMetadata = async ({ params }: PageParams): Promise<Metadata> => {
-  const user = await getUserProfile("params.userId");
+  const user = await getUserProfile(params.userId);
   if (!user) {
     throw new Error("User not found");
   }
