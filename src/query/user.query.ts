@@ -2,6 +2,7 @@ import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Prisma } from "@prisma/client"
 import { postSelectQuery } from "./post.query"
+import { cache } from "react"
 
 const userQuery = {
     id: true,
@@ -14,9 +15,9 @@ const userQuery = {
     email: true,
 }satisfies Prisma.UserSelect
 
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+// export const revalidate = 0;
+// export const dynamic = "force-dynamic";
+// export const fetchCache = "force-no-store";
 
 export const getUser=async()=>{
     const session = await getAuthSession()
@@ -33,7 +34,7 @@ throw new Error("User not found")
     return user
 }
 
-export const getUserProfile = async (userId: string) => {
+export const getUserProfile = cache(async (userId: string) => {
     const user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -95,7 +96,7 @@ export const getUserProfile = async (userId: string) => {
         },
       },
     });
-    return user}
+    return user})
 
 export const getUserEdit = async () => {
     const session= await getAuthSession()
