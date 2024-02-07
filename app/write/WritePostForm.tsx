@@ -5,7 +5,6 @@ import { ContentTextArea } from '@/src/feature/post/ContentTextArea';
 import PostLayout from '@/src/feature/post/PostLayout';
 import { User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import router from 'next/router';
 import {z} from 'zod';
 
 const Schema = z.object({

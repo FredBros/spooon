@@ -19,7 +19,7 @@ export const Footer = async() => {
 
         {session ? (
           <Link
-            href="/write"
+            href="/new-recipe"
             className={clsx(buttonVariants({ variant: "outline" }), "flex-1")}
           >
             <PenSquare size={16} />
