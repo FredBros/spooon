@@ -1,8 +1,7 @@
 import { getAuthSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import Post from "@/src/feature/post/Post";
+import UniqueAlertDialog from "@/src/feature/recipe/UniqueAlertDialog";
 import { getLatestPosts } from "@/src/query/post.query";
-import { late } from "zod";
 
 
 export default async function Home() {
@@ -14,6 +13,7 @@ export default async function Home() {
 console.log("latest recipes:", latestRecipes)
   return (
     <div className="divide-y divide-muted">
+      <UniqueAlertDialog recipeId={"test"} />
       {posts.map((post) => (
         <Post post={post} key={post.id} />
       ))}

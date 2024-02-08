@@ -118,17 +118,16 @@ model LikeRecipe {
 
 model Recipe {
   id             String       @id @default(cuid())
-  title          String
-  url            String
-  description    String
+  url            String       @unique
+  description    String?
   ytDescription  String
-  ytId           String
-  ytChannelId    String
-  ytChannelTitle String
-  ytThumbail     String
-  ytPublishedAt  DateTime
+  ytId           String       @unique
+  ytChannelId    String?
+  ytChannelTitle String?
+  ytThumbail     String?
+  ytPublishedAt  DateTime?
   userId         String
-  rate           Float
+  rate           Float?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   comments       Comment[]

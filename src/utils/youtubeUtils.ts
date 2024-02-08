@@ -18,16 +18,17 @@ export const getVideoDetails = async (videoUrl:string) => {
       id: [videoId],
       part: ["snippet"],
     });
-  if (!response.data.items) {
+  if (!response.data.items || !response.data.items[0].id) {
       throw new Error("No video found");
     }
     const video = response.data.items[0];
+    if (!video.id) {throw new Error("No video found")}
     return {
-      id: video.id,
-      description: video.snippet?.description || "Pas de description disponible",
-      channelId: video.snippet?.channelId,
-      channelTitle: video.snippet?.channelTitle,
-      thunmbail: video.snippet?.thumbnails?.default?.url,
-      publishedAt: video.snippet?.publishedAt,
+      ytId: video.id,
+      ytDescription: video.snippet?.description || "Pas de description disponible",
+      ytChannelId: video.snippet?.channelId,
+      ytChannelTitle: video.snippet?.channelTitle,
+      ytThumbail: video.snippet?.thumbnails?.default?.url,
+      ytPublishedAt: video.snippet?.publishedAt,
     };
 };

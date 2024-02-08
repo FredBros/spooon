@@ -37,9 +37,9 @@ const PostLayout = ({className, user, createdAt, postId, children}:PostLayoutPro
                 {formatDate(createdAt)}
               </p>
             ) : null}
-            <button>
+            {/* <button>
               <MoreHorizontal size={20} />
-            </button>
+            </button> */}
           </div>
         </Link>
         {children}

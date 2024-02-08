@@ -33,8 +33,9 @@ export const commentSelectQuery = (userId?: string) =>
 export const recipeSelectQuery = (userId?: string) =>
   ({
     id: true,
-    title: true,
     url: true,
+    description: true,
+    ytDescription: true,
     ytThumbail: true,
     ytId: true,
     ytChannelId: true,
@@ -75,7 +76,7 @@ export const recipeSelectQuery = (userId?: string) =>
       select: recipeSelectQuery(userId),
     });
 
-export const getRecipe = (id: string, userId?: string) =>
+export const getRecipeView = (id: string, userId?: string) =>
   prisma.recipe.findUnique({
     where: { id },
     select: {
@@ -87,4 +88,12 @@ export const getRecipe = (id: string, userId?: string) =>
         select: commentSelectQuery(userId),
       },
     }
+  });
+
+export const getRecipeIdWithUrl = (url: string) =>
+  prisma.recipe.findFirst({
+    where: { url },
+    select: {
+      id: true,
+    },
   });

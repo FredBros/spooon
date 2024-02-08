@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Recipe" ALTER COLUMN "ytDescription" DROP NOT NULL,
+ALTER COLUMN "ytChannelId" DROP NOT NULL,
+ALTER COLUMN "ytChannelTitle" DROP NOT NULL,
+ALTER COLUMN "ytThumbail" DROP NOT NULL,
+ALTER COLUMN "ytPublishedAt" DROP NOT NULL;
