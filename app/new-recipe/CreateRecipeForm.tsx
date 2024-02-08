@@ -20,8 +20,7 @@ import { createRecipe } from "./create-recipe.action";
 import UniqueAlertDialog from "@/src/feature/recipe/UniqueAlertDialog";
 import { useState } from "react";
 
-
-var recipeId= "";
+var recipeId = "";
 const Schema = z.object({
   url: z
     .string()
@@ -39,19 +38,17 @@ type CreateRecipeFormProps = {
 export default function CreateRecipeForm({ user }: CreateRecipeFormProps) {
   const form = useZodForm({ schema: Schema });
   const router = useRouter();
-const [isUnique, setIsUnique] = useState(true);
+  const [isUnique, setIsUnique] = useState(true);
+
+
   const onSubmit = async (values: CreateRecipeFormValues) => {
     const response = await createRecipe({ ...values });
-    console.log("response from le formulaire" + {response});
-    recipeId=response.recipeId;
+    recipeId = response.recipeId;
     if (!response || response.status === "error")
       return <Error statusCode={500} />;
-    // if (response.status === "notUnique") return (<UniqueAlertDialog recipeId={response.recipeId}/>);
     if (response.status === "notUnique") {
-      console.log("Not unique from le formulaire");
-      // return <UniqueAlertDialog recipeId={response.recipeId} />;
       setIsUnique(false);
-      return
+      return;
     }
 
     router.push(`/recipes/${response.recipeId}`);

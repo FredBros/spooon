@@ -119,6 +119,7 @@ model LikeRecipe {
 model Recipe {
   id             String       @id @default(cuid())
   url            String       @unique
+  title          String
   description    String?
   ytDescription  String
   ytId           String       @unique
@@ -126,6 +127,7 @@ model Recipe {
   ytChannelTitle String?
   ytThumbail     String?
   ytPublishedAt  DateTime?
+  ytChannelThumbail String?
   userId         String
   rate           Float?
   createdAt      DateTime     @default(now())
