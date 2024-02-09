@@ -4,30 +4,30 @@ import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export const likeAction = async (postId: string) => {
+export const likeRecipeAction = async (recipeId: string) => {
   const session = await getAuthSession();
   if (!session?.user.id) {
     return;
   }
-  const isLiked = await prisma.like.findFirst({
+  const isLiked = await prisma.likeRecipe.findFirst({
     where: {
-      postId,
+      recipeId,
       userId: session.user.id,
     },
   });
   if (isLiked) {
-    await prisma.like.delete({
+    await prisma.likeRecipe.delete({
       where: {
         id: isLiked.id,
       },
     });
   } else {
-    await prisma.like.create({
+    await prisma.likeRecipe.create({
       data: {
         userId: session.user.id,
-        postId,
+        recipeId,
       },
     });
   }
-  revalidatePath('/posts/[postId]');
+revalidatePath("/");
 };

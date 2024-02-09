@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/src/theme/ThemeProvider";
 import clsx from "clsx";
 import Header from "@/src/feature/layout/Header";
 import { Footer } from "@/src/feature/layout/Footer";
+import "@smastrom/react-rating/style.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -18,7 +18,7 @@ CREATE TABLE "Recipe" (
     "ytId" TEXT NOT NULL,
     "ytChannelId" TEXT NOT NULL,
     "ytChannelTitle" TEXT NOT NULL,
-    "ytThumbail" TEXT NOT NULL,
+    "ytThumbnail" TEXT NOT NULL,
     "ytPublishedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
     "rate" DOUBLE PRECISION,

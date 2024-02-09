@@ -7,7 +7,7 @@ const youtube = google.youtube({
   auth: YOUTUBE_API_KEY,
 });
 
-const getChannelThumbail = async (channelId?: string| null) => {
+const getChannelthumbnail = async (channelId?: string | null) => {
   if (!channelId) {
     return null;
   }
@@ -17,11 +17,9 @@ const getChannelThumbail = async (channelId?: string| null) => {
   });
   if (!channelList.data.items) {
     return null;
-  }  
+  }
   return channelList.data.items[0].snippet?.thumbnails?.default?.url;
-
-}
-
+};
 
 export const getVideoDetails = async (videoUrl: string) => {
   const videoIdMatch = videoUrl.match(/[?&]v=([^&]+)/);
@@ -42,8 +40,8 @@ export const getVideoDetails = async (videoUrl: string) => {
     throw new Error("No video found");
   }
   const channelId = video.snippet?.channelId;
-  
-  const ytChannelThumbail = await getChannelThumbail(channelId);
+
+  const ytChannelthumbnail = await getChannelthumbnail(channelId);
 
   return {
     ytId: video.id,
@@ -51,9 +49,9 @@ export const getVideoDetails = async (videoUrl: string) => {
       video.snippet?.description || "Pas de description disponible",
     ytChannelId: video.snippet?.channelId,
     ytChannelTitle: video.snippet?.channelTitle,
-    ytThumbail: video.snippet?.thumbnails?.standard?.url,
+    ytThumbnail: video.snippet?.thumbnails?.standard?.url,
     ytPublishedAt: video.snippet?.publishedAt,
     title: video.snippet?.title || "Pas de titre disponible",
-    ytChannelThumbail: ytChannelThumbail,
+    ytChannelThumbnail: ytChannelthumbnail,
   };
 };

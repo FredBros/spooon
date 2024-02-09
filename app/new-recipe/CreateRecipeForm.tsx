@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { createRecipe } from "./create-recipe.action";
 import UniqueAlertDialog from "@/src/feature/recipe/UniqueAlertDialog";
 import { useState } from "react";
+import PostLayout from "@/src/feature/post/PostLayout";
 
 var recipeId = "";
 const Schema = z.object({
@@ -55,7 +56,7 @@ export default function CreateRecipeForm({ user }: CreateRecipeFormProps) {
     router.refresh();
   };
   return (
-    <RecipeLayout user={user}>
+    <PostLayout user={user}>
       <Form className="w-2/3 space-y-6 mt-8" form={form} onSubmit={onSubmit}>
         <FormField
           control={form.control}
@@ -86,6 +87,6 @@ export default function CreateRecipeForm({ user }: CreateRecipeFormProps) {
         </div>
       </Form>
       {!isUnique && <UniqueAlertDialog recipeId={recipeId} />}
-    </RecipeLayout>
+    </PostLayout>
   );
 }

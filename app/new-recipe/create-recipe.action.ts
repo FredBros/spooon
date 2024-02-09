@@ -20,42 +20,52 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
     recipeId: "",
     status: "",
   };
-  
+
   const user = await getUser();
   const ytvalues = await getVideoDetails(values.url);
-  if (!ytvalues?.ytId || !ytvalues.ytId) {
+  if (!ytvalues?.ytId) {
     throw new Error("Invalid YouTube URL");
   }
- try { const recipe =await prisma.recipe.create({
-    data: {
-      userId: user.id,
-      ...values,
-      ...ytvalues,
-    },
-  });
-  revalidatePath("/");
-  response.recipeId=recipe.id;
-  response.status="success";
-  return response;
-} catch (e) {
-  if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    if (e.code === "P2002") {
-      console.error(e);
-      response.status="notUnique";
-      console.log(response.status);
-      const recipeId= await getRecipeIdWithUrl(values.url);
-      if(!recipeId) {
-        response.recipeId="error"
-        response.status="error"
-        return response} 
-      response.recipeId = recipeId.id;
-      console.log(response)
-      return response
+  const datadebug = {
+    userId: user.id,
+    ...values,
+    ...ytvalues,
+  };
+  console.log(datadebug);
+  try {
+    const recipe = await prisma.recipe.create({
+      data: {
+        userId: user.id,
+        ...values,
+        ...ytvalues,
+      },
+    });
+    revalidatePath("/");
+    response.recipeId = recipe.id;
+    response.status = "success";
+    return response;
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        console.error(e);
+        response.status = "notUnique";
+        console.log(response.status);
+        const recipeId = await getRecipeIdWithUrl(values.url);
+        if (!recipeId) {
+          response.recipeId = "error";
+          response.status = "error";
+          return response;
+        }
+        response.recipeId = recipeId.id;
+        console.log(response);
+        return response;
+      } else {
+        response.recipeId = "error";
+        response.status = "error";
+        return response;
+      }
     }
-  else {
-    response.recipeId="error"
-        response.status="error"
-        return response}
-  }}
-  throw new Error("Error creating recipe");
+    throw e;
+  }
+  // throw new Error("Error creating recipe");
 }

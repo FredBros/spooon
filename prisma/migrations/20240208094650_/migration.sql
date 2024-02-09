@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "Recipe" ADD COLUMN     "ytChannelThumbail" TEXT;
+ALTER TABLE "Recipe" ADD COLUMN     "ytChannelthumbnail" TEXT;

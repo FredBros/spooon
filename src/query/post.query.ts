@@ -42,6 +42,8 @@ export const getLatestPosts = (userId?: string) =>
       postSelectQuery(userId)
     ,
   });
+
+  
  export const getPostView = (id: string, userId?: string) =>
    prisma.post.findUnique({
      where: { id },

@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Heart, MessageCircle } from 'lucide-react'
 import LikeButton from './LikeButton'
-import { get } from 'http'
 import { getAuthSession } from '@/lib/auth'
 import HovercardSignIn from '@/components/ui/featured/HovercardSignIn'
+import { likeAction } from './like.action'
 
 type PostProps = {
   post:PostHome}
@@ -21,7 +21,7 @@ const Post = async({post}: PostProps) => {
       </Link>
       <div className="flex gap-2 items-center">
         {session ? (
-          <LikeButton postId={post.id} isLiked={post.likes.length > 0} />
+          <LikeButton itemId={post.id} isLiked={post.likes.length > 0} likeAction={likeAction}/>
         ) : (
           <HovercardSignIn message="Please log in to like">
             <Button

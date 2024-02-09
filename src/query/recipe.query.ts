@@ -34,11 +34,13 @@ export const recipeSelectQuery = (userId?: string) =>
   ({
     id: true,
     url: true,
+    title: true,
     description: true,
     ytDescription: true,
-    ytThumbail: true,
+    ytThumbnail: true,
     ytId: true,
     ytChannelId: true,
+    ytChannelThumbnail: true,
     ytChannelTitle: true,
     ytPublishedAt: true,
     createdAt: true,
@@ -49,7 +51,7 @@ export const recipeSelectQuery = (userId?: string) =>
         image: true,
       },
     },
-    rate: true,
+    rating: true,
     likesRecipe: {
       select: {
         userId: true,
@@ -61,20 +63,20 @@ export const recipeSelectQuery = (userId?: string) =>
     _count: {
       select: {
         likesRecipe: true,
-        rates: true,
+        ratings: true,
+        comments: true,
       },
     },
   } satisfies Prisma.RecipeSelect);
 
-
-  export const getLatestRecipes = (userId?: string) =>
-    prisma.recipe.findMany({
-      take: 20,
-      orderBy: {
-        createdAt: "desc",
-      },
-      select: recipeSelectQuery(userId),
-    });
+export const getLatestRecipes = (userId?: string) =>
+  prisma.recipe.findMany({
+    take: 20,
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: recipeSelectQuery(userId),
+  });
 
 export const getRecipeView = (id: string, userId?: string) =>
   prisma.recipe.findUnique({
@@ -87,7 +89,7 @@ export const getRecipeView = (id: string, userId?: string) =>
         },
         select: commentSelectQuery(userId),
       },
-    }
+    },
   });
 
 export const getRecipeIdWithUrl = (url: string) =>
@@ -97,3 +99,5 @@ export const getRecipeIdWithUrl = (url: string) =>
       id: true,
     },
   });
+
+  export type RecipeHome = Prisma.PromiseReturnType<typeof getLatestRecipes>[number];
