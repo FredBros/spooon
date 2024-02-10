@@ -24,7 +24,7 @@ const WriteModal = ({
       }}
     >
       <DialogContent>
-        <WritePostForm user={user} onSubmit={createPost} />
+        <WritePostForm user={user} onSubmit={createPost} pathname={pathname} />
       </DialogContent>
     </Dialog>
   );

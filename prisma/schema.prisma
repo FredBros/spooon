@@ -194,8 +194,8 @@ model Comment {
   replies      Comment[]     @relation("comments")
   parent       Comment?      @relation("comments", fields: [parentId], references: [id], onDelete: Cascade)
   likesComment LikeComment[]
-  recipe       Recipe?       @relation(fields: [recipeId], references: [id])
-  recipeId     String?
+  recipe       Recipe      @relation(fields: [recipeId], references: [id])
+  recipeId     String
 }
 
 

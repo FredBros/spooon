@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { DefaultArgs } from "@prisma/client/runtime/library";
 
 export const commentSelectQuery = (userId?: string) =>
   ({
@@ -28,7 +29,7 @@ export const commentSelectQuery = (userId?: string) =>
         replies: true,
       },
     },
-  } satisfies Prisma.CommentSelect);
+  } satisfies Prisma.CommentSelect<DefaultArgs>);
 
 export const recipeSelectQuery = (userId?: string) =>
   ({
@@ -77,6 +78,17 @@ export const getLatestRecipes = (userId?: string) =>
     },
     select: recipeSelectQuery(userId),
   });
+export const getComments = (recipeId: string, userId?: string) =>
+  prisma.comment.findMany({
+    where: { recipeId },
+    select: commentSelectQuery(userId),
+  });
+
+  export const getComment = (commentId: string, userId?: string) =>
+  prisma.comment.findUnique({
+    where: { id: commentId },
+    select: commentSelectQuery(userId),
+  });
 
 export const getRecipeView = (id: string, userId?: string) =>
   prisma.recipe.findUnique({
@@ -100,4 +112,8 @@ export const getRecipeIdWithUrl = (url: string) =>
     },
   });
 
-  export type RecipeHome = Prisma.PromiseReturnType<typeof getLatestRecipes>[number];
+export type RecipeHome = Prisma.PromiseReturnType<
+  typeof getLatestRecipes
+>[number];
+export type RecipeView = Prisma.PromiseReturnType<typeof getRecipeView>;
+export type CommentType = Prisma.PromiseReturnType<typeof getComments>[number];

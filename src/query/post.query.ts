@@ -61,7 +61,7 @@ export const getLatestPosts = (userId?: string) =>
      },
    });
 
-export const getPost = (id: string, userId?: string) => {
+export const  getPost = (id: string, userId?: string) => {
   return prisma.post.findUnique({
     where: { id },
     select: {

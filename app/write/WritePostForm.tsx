@@ -15,30 +15,42 @@ export type WritePostFormValues = z.infer<typeof Schema>
 type WritePostFormProps = {
   user: User;
   onSubmit: (values: WritePostFormValues) => Promise<string>;
+  pathname: string|null;
 }
 
-const WritePostForm = ({user, onSubmit}: WritePostFormProps) => {
-  const form = useZodForm({schema: Schema})
-  const router = useRouter()
+const WritePostForm = ({ user, onSubmit, pathname }: WritePostFormProps) => {
+  console.log(pathname)
+  const form = useZodForm({ schema: Schema });
+  const router = useRouter();
   return (
     <PostLayout user={user}>
-      <Form form={form} onSubmit={async (values)=>{
-        const postId = await onSubmit(values)
-        router.push(`/posts/${postId}`);
-        router.refresh();
-      }} >
-        <FormField control={form.control} name='content' render={({field})=>(
-          <FormItem>
-            <ContentTextArea {...field} />
-            <FormMessage/>
-          </FormItem>
-        )} />
-        <div className='flex w-full justify-end'>
+      <Form
+        form={form}
+        onSubmit={async (values) => {
+          const postId = await onSubmit(values);
+          if(pathname!.includes("recipes")){
+          router.push(`/recipes/${postId}`)}
+          if(pathname!.includes("posts")){
+            router.push(`/posts/${postId}`)}
+          router.refresh();
+        }}
+      >
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <ContentTextArea {...field} />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex w-full justify-end">
           <Button size="sm">Post</Button>
         </div>
-        </Form>
+      </Form>
     </PostLayout>
-  )
-}
+  );
+};
 
 export default WritePostForm;

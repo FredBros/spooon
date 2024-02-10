@@ -22,7 +22,7 @@ const ReplyModal = ({
       }}
     >
       <DialogContent>
-        <WritePostForm user={user} onSubmit={createReply} />
+        <WritePostForm user={user} onSubmit={createReply} pathname={"/reply"}/>
       </DialogContent>
     </Dialog>
   );

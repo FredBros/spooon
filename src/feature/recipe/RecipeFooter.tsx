@@ -42,7 +42,7 @@ export default async function RecipeFooter({ recipe }: RecipeProps) {
             {session ? (
               <Link
                 className={buttonVariants({ variant: "ghost", size: "icon" })}
-                href={`/recipes/${recipe.id}/reply`}
+                href={`/recipes/${recipe.id}/comment`}
               >
                 <MessageCircle size={20} />
               </Link>

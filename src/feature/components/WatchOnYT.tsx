@@ -17,7 +17,7 @@ export default function WatchOnYT({ className, videoId, size }: WatchOnYTProps) 
   return (
     <div className={clsx(className)}>
       <HoverCard openDelay={0}>
-        <HoverCardTrigger>
+        <HoverCardTrigger asChild>
           <a
             target="_blank"
             href={`http://www.youtube.com/watch?v=${videoId}`}
