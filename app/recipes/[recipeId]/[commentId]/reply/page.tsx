@@ -22,7 +22,11 @@ export default async function ReplyComment({ params }: { params: { recipeId: str
           pathname={pathname}
           onSubmit={async (values) => {
             "use server";
-            return createCommentReply(params.recipeId, params.commentId, values);
+            return createCommentReply(
+              params.recipeId,
+              params.commentId,
+              values,
+            );
           }}
         />
       </div>

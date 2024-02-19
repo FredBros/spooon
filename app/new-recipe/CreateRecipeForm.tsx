@@ -26,7 +26,7 @@ const Schema = z.object({
   url: z
     .string()
     .url()
-    .includes("youtube.com", { message: "Must be a YouTube URL" }),
+    .includes("youtube.com" ||"tiktok.com", { message: "Must be a YouTube or a TikTok URL" }),
   description: z.string().max(500, "Description is too long").optional(),
 });
 

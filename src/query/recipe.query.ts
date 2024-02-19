@@ -70,6 +70,7 @@ export const recipeSelectQuery = (userId?: string) =>
     },
   } satisfies Prisma.RecipeSelect);
 
+
 export const getLatestRecipes = (userId?: string) =>
   prisma.recipe.findMany({
     take: 20,

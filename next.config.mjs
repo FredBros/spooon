@@ -2,15 +2,11 @@
 
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {hostname: "i.ytimg.com",}
-  ],
+    remotePatterns: [{ hostname: "i.ytimg.com" }],
   },
   
+
 };
 
 
 export default nextConfig;
-
-
-

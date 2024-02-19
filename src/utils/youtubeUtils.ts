@@ -21,7 +21,7 @@ const getChannelthumbnail = async (channelId?: string | null) => {
   return channelList.data.items[0].snippet?.thumbnails?.default?.url;
 };
 
-export const getVideoDetails = async (videoUrl: string) => {
+export const getYTVideoDetails = async (videoUrl: string) => {
   const videoIdMatch = videoUrl.match(/[?&]v=([^&]+)/);
   if (!videoIdMatch) {
     console.error("L'URL de la vidéo YouTube est invalide");

@@ -4,7 +4,7 @@ import { getUser } from "@/src/query/user.query";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { CreateRecipeFormValues } from "./CreateRecipeForm";
-import { getVideoDetails } from "@/src/utils/youtubeUtils";
+import { getYTVideoDetails } from "@/src/utils/youtubeUtils";
 import { Prisma } from "@prisma/client";
 import { get } from 'http';
 import { getRecipeIdWithUrl } from '@/src/query/recipe.query';
@@ -22,14 +22,14 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
   };
 
   const user = await getUser();
-  const ytvalues = await getVideoDetails(values.url);
-  if (!ytvalues?.ytId) {
+  const videoValues = await getYTVideoDetails(values.url);
+  if (!videoValues?.ytId) {
     throw new Error("Invalid YouTube URL");
   }
   const datadebug = {
     userId: user.id,
     ...values,
-    ...ytvalues,
+    ...videoValues,
   };
   console.log(datadebug);
   try {
@@ -37,7 +37,7 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
       data: {
         userId: user.id,
         ...values,
-        ...ytvalues,
+        ...videoValues,
       },
     });
     revalidatePath("/");
