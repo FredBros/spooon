@@ -55,3 +55,14 @@ export const getYTVideoDetails = async (videoUrl: string) => {
     ytChannelThumbnail: ytChannelthumbnail,
   };
 };
+
+export const getYTChannelDetails = async (channelId: string) => {
+  const channelList = await youtube.channels.list({
+    id: [channelId],
+    part: ["snippet"],
+  });
+  if (!channelList.data.items) {
+    return null;
+  }
+  return channelList.data.items[0].snippet;
+};

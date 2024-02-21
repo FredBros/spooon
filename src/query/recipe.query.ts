@@ -71,15 +71,17 @@ export const recipeSelectQuery = (userId?: string) =>
   } satisfies Prisma.RecipeSelect);
 
 
-export const getLatestRecipes = (userId?: string) =>
+export const getLatestRecipes = (page: number, limit: number, userId?: string) =>
   prisma.recipe.findMany({
-    take: 20,
+    take: limit,
+    skip: (page - 1) * limit,
     orderBy: {
       createdAt: "desc",
     },
     select: recipeSelectQuery(userId),
   });
-export const getComments = (recipeId: string, userId?: string) =>
+
+  export const getComments = (recipeId: string, userId?: string) =>
   prisma.comment.findMany({
     where: { recipeId },
     select: commentSelectQuery(userId),
@@ -111,6 +113,69 @@ export const getRecipeIdWithUrl = (url: string) =>
     select: {
       id: true,
     },
+  });
+
+export const getChannelLastRecipes = (
+  channelId: string,
+  page: number,
+  limit: number,
+  userId?: string
+) =>
+  prisma.recipe.findMany({
+    where: { ytChannelId: channelId },
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: recipeSelectQuery(userId),
+  });
+
+export const getChannelMostLikedRecipes = (
+  channelId: string,
+  page: number,
+  limit: number,
+  userId?: string
+) =>
+  prisma.recipe.findMany({
+    where: { ytChannelId: channelId },
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      likesRecipe: {
+        _count: "desc",
+      },
+    },
+    select: recipeSelectQuery(userId),
+  });
+
+export const getChannelLikedRecipes = (
+  channelId: string,
+  page: number,
+  limit: number,
+  userId?: string
+) =>
+  prisma.recipe.findMany({
+    where: { ytChannelId: channelId,
+      OR: [{
+      likesRecipe: {
+        some: {
+          userId: userId ?? "error",
+        },
+      }},
+      {
+        user: {
+          id: userId ?? "error",
+      }}
+    ]},
+    take: limit,
+    skip: (page - 1) * limit,
+    orderBy: {
+      likesRecipe: {
+        _count: "desc",
+      },
+    },
+    select: recipeSelectQuery(userId),
   });
 
 export type RecipeHome = Prisma.PromiseReturnType<

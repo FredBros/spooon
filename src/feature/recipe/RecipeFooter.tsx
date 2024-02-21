@@ -1,4 +1,4 @@
-
+'use server'
 import { RecipeHome } from "@/src/query/recipe.query";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";

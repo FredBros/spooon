@@ -23,13 +23,11 @@ export default async function RecipeView({
   if (!recipe) {
     notFound();
   }
-  console.log("---------------------")
-  console.log(recipe.id)
-  console.log(recipe.comments)
+ 
   return (
     <div className="max-w-lg mx-auto mt-4 px-2 flex flex-col gap-4">
       <RecipeHeader
-        channelId={recipe.id}
+        channelId={recipe.ytChannelId}
         channelTitle={recipe.ytChannelTitle}
         channelThumbnail={recipe.ytChannelThumbnail}
         title={recipe.title}

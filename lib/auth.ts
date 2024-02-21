@@ -1,3 +1,4 @@
+
 import GithubProvider from "next-auth/providers/github";
 import { env } from "./env"; // Import the 'env' object from the 'process' module
 import { AuthOptions, getServerSession} from "next-auth"; 
@@ -5,6 +6,9 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "./prisma";
 import GoogleProvider from "next-auth/providers/google";// Import the 'PrismaAdapter' from the 'next-auth/adapters' module
 import EmailProvider from "next-auth/providers/email";
+
+
+
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   // Configure one or more authentication providers

@@ -6,9 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { CreateRecipeFormValues } from "./CreateRecipeForm";
 import { getYTVideoDetails } from "@/src/utils/youtubeUtils";
 import { Prisma } from "@prisma/client";
-import { get } from 'http';
 import { getRecipeIdWithUrl } from '@/src/query/recipe.query';
-import { th } from '@faker-js/faker';
 
 export type ResponseCreateRecipeType = {
   recipeId: string;
@@ -20,7 +18,6 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
     recipeId: "",
     status: "",
   };
-
   const user = await getUser();
   const videoValues = await getYTVideoDetails(values.url);
   if (!videoValues?.ytId) {
@@ -38,6 +35,11 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
         userId: user.id,
         ...values,
         ...videoValues,
+        ytChannelId: videoValues.ytChannelId || "", // Ensure ytChannelId is always a string
+        ytChannelTitle: videoValues.ytChannelTitle || "", // Ensure ytChannelTitle is always a string
+        ytThumbnail: videoValues.ytThumbnail || "", // Ensure ytThumbnail is always a string
+        ytPublishedAt: videoValues.ytPublishedAt || "", // Ensure ytPublishedAt is always a string or Date
+        ytChannelThumbnail: videoValues.ytChannelThumbnail || "", // Ensure ytChannelThumbnail is always a string
       },
     });
     revalidatePath("/");
@@ -57,7 +59,6 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
           return response;
         }
         response.recipeId = recipeId.id;
-        console.log(response);
         return response;
       } else {
         response.recipeId = "error";

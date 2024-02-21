@@ -19,7 +19,6 @@ type WritePostFormProps = {
 }
 
 const WritePostForm = ({ user, onSubmit, pathname }: WritePostFormProps) => {
-  console.log(pathname)
   const form = useZodForm({ schema: Schema });
   const router = useRouter();
   return (

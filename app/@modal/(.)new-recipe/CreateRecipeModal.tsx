@@ -5,7 +5,14 @@ import { User } from '@prisma/client'
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react'
 
-export default function CreateRecipeModal({user, path}:{user:User, path:string}) {
+type CreateRecipeModalProps = {
+  user: User;
+  path: string;
+  videoUrl?: string;
+
+}
+
+export default function CreateRecipeModal({user, path, videoUrl}: CreateRecipeModalProps) {
     const router = useRouter();
     const pathname = usePathname();
   return (
@@ -16,7 +23,7 @@ export default function CreateRecipeModal({user, path}:{user:User, path:string})
       }}
     >
       <DialogContent>
-        <CreateRecipeForm user={user} />
+        <CreateRecipeForm user={user} videoUrl={videoUrl} />
       </DialogContent>
     </Dialog>
   );

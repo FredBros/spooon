@@ -34,9 +34,10 @@ export type CreateRecipeFormValues = z.infer<typeof Schema>;
 
 type CreateRecipeFormProps = {
   user: User;
+  videoUrl? : string;
 };
 
-export default function CreateRecipeForm({ user }: CreateRecipeFormProps) {
+export default function CreateRecipeForm({ user, videoUrl }: CreateRecipeFormProps) {
   const form = useZodForm({ schema: Schema });
   const router = useRouter();
   const [isUnique, setIsUnique] = useState(true);
@@ -61,6 +62,7 @@ export default function CreateRecipeForm({ user }: CreateRecipeFormProps) {
         <FormField
           control={form.control}
           name="url"
+          defaultValue={videoUrl}
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Url de la vidéo</FormLabel>

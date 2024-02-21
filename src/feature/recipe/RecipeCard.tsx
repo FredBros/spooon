@@ -22,7 +22,7 @@ export default function RecipeCard({recipe}: RecipeCardProps) {
     <Card className="max-w-80">
       <CardHeader className="p-2">
         <RecipeHeader
-          channelId={recipe.id}
+          channelId={recipe.ytChannelId}
           channelTitle={recipe.ytChannelTitle}
           channelThumbnail={recipe.ytChannelThumbnail}
           title={recipe.title}
