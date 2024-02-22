@@ -16,10 +16,11 @@ import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import RecipeLayout from "@/src/feature/recipe/RecipeLayout";
 import { Input } from "@/components/ui/input";
-import { createRecipe } from "./create-recipe.action";
+import { ResponseCreateRecipeType, createRecipe } from "./create-recipe.action";
 import UniqueAlertDialog from "@/src/feature/recipe/UniqueAlertDialog";
 import { useState } from "react";
 import PostLayout from "@/src/feature/post/PostLayout";
+import { checkIfChannelIdExists } from "@/src/query/channel.query";
 
 var recipeId = "";
 const Schema = z.object({
@@ -44,7 +45,7 @@ export default function CreateRecipeForm({ user, videoUrl }: CreateRecipeFormPro
 
 
   const onSubmit = async (values: CreateRecipeFormValues) => {
-    const response = await createRecipe({ ...values });
+    const response: ResponseCreateRecipeType = await createRecipe({ ...values });
     recipeId = response.recipeId;
     if (!response || response.status === "error")
       return <Error statusCode={500} />;
@@ -52,7 +53,7 @@ export default function CreateRecipeForm({ user, videoUrl }: CreateRecipeFormPro
       setIsUnique(false);
       return;
     }
-
+    
     router.push(`/recipes/${response.recipeId}`);
     router.refresh();
   };

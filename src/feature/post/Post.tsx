@@ -1,19 +1,20 @@
-import { PostHome } from '@/src/query/post.query'
-import React from 'react'
-import PostLayout from './PostLayout'
-import Link from 'next/link'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { Heart, MessageCircle } from 'lucide-react'
-import LikeButton from './LikeButton'
-import { getAuthSession } from '@/lib/auth'
-import HovercardSignIn from '@/components/ui/featured/HovercardSignIn'
-import { likeAction } from './like.action'
+import { PostHome } from "@/src/query/post.query";
+import React from "react";
+import PostLayout from "./PostLayout";
+import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Heart, MessageCircle } from "lucide-react";
+import LikeButton from "../components/likes/LikeButton";
+import { getAuthSession } from "@/lib/auth";
+import HovercardSignIn from "@/components/ui/featured/HovercardSignIn";
+import { likeAction } from "../components/likes/like.action";
 
 type PostProps = {
-  post:PostHome}
+  post: PostHome;
+};
 
-const Post = async({post}: PostProps) => {
-  const session = await getAuthSession()
+const Post = async ({ post }: PostProps) => {
+  const session = await getAuthSession();
   return (
     <PostLayout user={post.user} postId={post.id} createdAt={post.createdAt}>
       <Link href={`/posts/${post.id}`} className="text-sm text-foreground">
@@ -21,7 +22,11 @@ const Post = async({post}: PostProps) => {
       </Link>
       <div className="flex gap-2 items-center">
         {session ? (
-          <LikeButton itemId={post.id} isLiked={post.likes.length > 0} likeAction={likeAction}/>
+          <LikeButton
+            itemId={post.id}
+            isLiked={post.likes.length > 0}
+            likeAction={likeAction}
+          />
         ) : (
           <HovercardSignIn message="Please log in to like">
             <Button
@@ -71,6 +76,6 @@ const Post = async({post}: PostProps) => {
       </div>
     </PostLayout>
   );
-}
+};
 
-export default Post
+export default Post;

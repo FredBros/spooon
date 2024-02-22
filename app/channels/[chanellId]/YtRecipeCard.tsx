@@ -12,24 +12,34 @@ import RecipeFooter from "@/src/feature/recipe/RecipeFooter";
 import Link from "next/link";
 import { YtRecipeType } from "./YtNewsTab";
 import YoutubeEmbed from "@/src/feature/components/YoutubeEmbed";
-import { Save } from "lucide-react";
+import { ArrowRightSquare, Save } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import HovercardSignIn from "@/components/ui/featured/HovercardSignIn";
+import { boolean } from "zod";
 
 type YtRecipeCardProps = {
   recipe: YtRecipeType;
   isLogged: boolean;
+  recipeIdInDb: string | null;
 };
 
-export default function YtRecipeCard({ recipe, isLogged }: YtRecipeCardProps) {
+export default function YtRecipeCard({ recipe, isLogged, recipeIdInDb }: YtRecipeCardProps) {
   const id = recipe.id.split(":")[2];
   const publishedDate = new Date(parseInt(recipe.published));
   const formattedDate = publishedDate.toLocaleDateString();
+
+  console.log("recipeIdInDb", recipeIdInDb);
   return (
     <Card className="max-w-80">
       <CardHeader className="p-2 pb-0 pl-6">
         <div className="flex w-full flex-row items-start justify-between ">
-          {isLogged ? (
+          {recipeIdInDb ? (
+            <Button asChild variant="ghost" disabled size="icon">
+              <Link href={`/recipes/${recipeIdInDb}`}>
+              <ArrowRightSquare size={20} />
+              </Link>
+            </Button>
+          ) : isLogged ? (
             <Button asChild variant="ghost" disabled size="icon">
               <Link href={`/new-recipe/${id}`}>
                 <Save size={20} />
@@ -42,6 +52,7 @@ export default function YtRecipeCard({ recipe, isLogged }: YtRecipeCardProps) {
               </Button>
             </HovercardSignIn>
           )}
+
           <p className="text-sm text-muted-foreground mt-0">{formattedDate}</p>
         </div>
       </CardHeader>

@@ -7,15 +7,19 @@ import { CreateRecipeFormValues } from "./CreateRecipeForm";
 import { getYTVideoDetails } from "@/src/utils/youtubeUtils";
 import { Prisma } from "@prisma/client";
 import { getRecipeIdWithUrl } from '@/src/query/recipe.query';
+import { checkIfChannelIdExists } from '@/src/query/channel.query';
+import { createChannel } from './create.channel.action';
 
 export type ResponseCreateRecipeType = {
   recipeId: string;
-  status: "success" | "notUnique" | "error" |'';
+  ytChannelId: string;
+  status: "success" | "notUnique" | "error" | "";
 };
 
 export const createRecipe = async (values: CreateRecipeFormValues) => {
   const response: ResponseCreateRecipeType = {
     recipeId: "",
+    ytChannelId: "",
     status: "",
   };
   const user = await getUser();
@@ -29,6 +33,14 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
     ...videoValues,
   };
   console.log(datadebug);
+
+  //verifier si videoValues.ytChannelId existe dans la base de donnée Channel
+  if (!videoValues.ytChannelId) {
+    throw new Error("Probleme avec l'ID de la chaine youtube");
+  }
+  const isExists = await checkIfChannelIdExists(videoValues.ytChannelId);
+  if (!isExists) {
+  await createChannel(videoValues.ytChannelId);  }
   try {
     const recipe = await prisma.recipe.create({
       data: {
@@ -68,5 +80,7 @@ export const createRecipe = async (values: CreateRecipeFormValues) => {
     }
     throw e;
   }
-  // throw new Error("Error creating recipe");
 }
+
+
+

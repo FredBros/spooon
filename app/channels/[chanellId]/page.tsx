@@ -16,7 +16,6 @@ export default async function ChanelPage({
   const channelId = params.chanellId;
   const session = await getAuthSession();
   const isLogged = session ? true : false;
-
   return (
     <div>
       <Header channelId={channelId} userId={session?.user.id}/>

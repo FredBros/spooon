@@ -1,22 +1,22 @@
-import { getAuthSession } from '@/lib/auth';
-import React from 'react'
-import LikeButton from '../post/LikeButton';
-import { CommentType } from '@/src/query/recipe.query';
-import { likeCommentAction } from "./likeComment.action";
+import { getAuthSession } from "@/lib/auth";
+import React from "react";
+import LikeButton from "../components/likes/LikeButton";
+import { CommentType } from "@/src/query/recipe.query";
+import { likeCommentAction } from "../components/likes/likeComment.action";
 import HovercardSignIn from "@/components/ui/featured/HovercardSignIn";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Heart, MessageCircle } from "lucide-react";
 import Link from "next/link";
-
-
 
 type CommentProps = {
   recipeId: string;
   comment: CommentType;
 };
 
-
-export default async function CommentFooter({ comment, recipeId }: CommentProps) {
+export default async function CommentFooter({
+  comment,
+  recipeId,
+}: CommentProps) {
   const session = await getAuthSession();
 
   return (

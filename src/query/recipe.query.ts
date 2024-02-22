@@ -178,6 +178,22 @@ export const getChannelLikedRecipes = (
     select: recipeSelectQuery(userId),
   });
 
+
+export const getAllChannelRecipes = (channelId:string) =>{
+  return prisma.recipe.findMany({
+    where: { ytChannelId: channelId },
+    select: {
+      id: true,
+      ytId: true,
+    },
+  });
+
+}
+
+
+
+
+
 export type RecipeHome = Prisma.PromiseReturnType<
   typeof getLatestRecipes
 >[number];

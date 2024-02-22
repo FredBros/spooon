@@ -68,10 +68,9 @@ model User {
   likes         Like[]
   LikeComments  LikeComment[]
   likesRecipes  LikeRecipe[]
-  ratingsGiven          Rating[]
+  ratingsGiven  Rating[]
   likeChannel   LikeChannel[]
 }
-
 
 model Post {
   id        String   @id @default(cuid())
@@ -85,6 +84,7 @@ model Post {
   parent    Post?    @relation("comments", fields: [parentId], references: [id], onDelete: Cascade)
   likes     Like[]
 }
+
 // ------------ Likes ------------
 
 // a user follow a user
@@ -144,16 +144,16 @@ model LikeComment {
 
 // a user likes a user
 
-
 model Channel {
-  id                 String        @id @default(cuid())
-  url                String        @unique
-  title              String
-  ytId               String        @unique
-  rate               Float?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  likesChannel       LikeChannel[]
+  id           String        @id @default(cuid())
+  url          String        @unique
+  title        String
+  ytId         String        @unique
+  rate         Float?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  likesChannel LikeChannel[]
+  recipes      Recipe[]
 }
 
 model Recipe {
@@ -169,13 +169,14 @@ model Recipe {
   ytPublishedAt      DateTime
   ytChannelThumbnail String
   userId             String
-  rating               Float?
+  rating             Float?
   createdAt          DateTime     @default(now())
   updatedAt          DateTime     @updatedAt
   comments           Comment[]
   user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   likesRecipe        LikeRecipe[]
-  ratings              Rating[]
+  ratings            Rating[]
+  Channel            Channel?     @relation(fields: [ytChannelId], references: [ytId])
 }
 
 model Comment {
@@ -189,16 +190,15 @@ model Comment {
   replies      Comment[]     @relation("comments")
   parent       Comment?      @relation("comments", fields: [parentId], references: [id], onDelete: Cascade)
   likesComment LikeComment[]
-  recipe       Recipe      @relation(fields: [recipeId], references: [id])
+  recipe       Recipe        @relation(fields: [recipeId], references: [id])
   recipeId     String
 }
-
 
 model Rating {
   id        String   @id @default(cuid())
   userId    String
   recipeId  String
-  rating      Decimal
+  rating    Decimal
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

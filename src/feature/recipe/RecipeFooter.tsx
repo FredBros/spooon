@@ -1,9 +1,9 @@
-'use server'
+"use server";
 import { RecipeHome } from "@/src/query/recipe.query";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Heart, MessageCircle, Watch, Youtube } from "lucide-react";
-import LikeButton from "../post/LikeButton";
+import LikeButton from "../components/likes/LikeButton";
 import { getAuthSession } from "@/lib/auth";
 import HovercardSignIn from "@/components/ui/featured/HovercardSignIn";
 import { likeRecipeAction } from "./LikeRecipe.action";
@@ -67,12 +67,11 @@ export default async function RecipeFooter({ recipe }: RecipeProps) {
           <WatchOnYT videoId={recipe.ytId} size={20} />
         </div>
         <div className="flex gap-2 items-center">
-          <Link
-            href={`/recipes/${recipe.id}`}
+          <p
             className="text-muted-foreground text-sm"
           >
             {recipe._count.likesRecipe} likes
-          </Link>
+          </p>
           <p className="text-muted-foreground"> · </p>
           <Link
             href={`/recipes/${recipe.id}`}
