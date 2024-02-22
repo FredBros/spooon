@@ -39,4 +39,41 @@ export const checkIfChannelIdExists = async (channelId: string) => {
   });
   return channel;
 };
+
+
+// export const getTotalLikesByChannel = async (channelId: string) => {
+//   // totalLikes egale le total de tous les likes des recettes de la chaine
+//   const totalLikes = await prisma.recipe.aggregate({
+//     where: {
+//       ytChannelId: channelId,
+//     },
+//     _sum:{
+//       likesRecipe: true,
+//     },
+//   });
+// }
+export async function countLikesRecipesForChannel(channelId:string) {
+  const recipesLikes = await prisma.recipe.findMany({
+    where: {
+      ytChannelId: channelId,
+    },
+    select: {
+      _count: {
+        select: {
+          likesRecipe: true,
+        },
+      },
+    },
+  });
+const totalLikes = recipesLikes.reduce(
+  (acc, curr) => acc + curr._count.likesRecipe,
+  0
+);
+  return totalLikes;
+}
+
+
+
+
+
 export type ChannelDetailsType = Prisma.ChannelSelect<DefaultArgs>[];

@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { getChannelDetails } from "@/src/query/channel.query";
+import { countLikesRecipesForChannel, getChannelDetails } from "@/src/query/channel.query";
 import { getYTChannelDetails } from '@/src/utils/youtubeUtils'
 import clsx from 'clsx'
 import React from 'react'
@@ -12,6 +12,9 @@ import { Heart } from 'lucide-react';
 export default async function Header({ channelId, className, userId }: { channelId: string, className?: string, userId?: string}) {
   const ytChannelDetails = await getYTChannelDetails(channelId);
   const channelDetails = await getChannelDetails(channelId, userId);
+  const totalLikes = await countLikesRecipesForChannel(channelId);
+  console.log(totalLikes)
+
   return (
     <div
       className={clsx(
@@ -61,13 +64,17 @@ export default async function Header({ channelId, className, userId }: { channel
             </Button>
           </HovercardSignIn>
         )}
-      
+
         <p className="text-muted-foreground text-sm">
           {channelDetails._count.likesChannel} likes
         </p>
         <p className="text-muted-foreground"> · </p>
         <p className="text-muted-foreground text-sm">
           {channelDetails._count.recipes} recettes
+        </p>
+        <p className="text-muted-foreground"> · </p>
+        <p className="text-muted-foreground text-sm">
+          {totalLikes} likes recettes
         </p>
       </div>
     </div>
